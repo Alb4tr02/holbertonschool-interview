@@ -9,8 +9,8 @@ def canUnlockAll(boxes):
     """
 
     keys = [x for x in range(1, len(boxes))]
-    for box in boxes:
-        for key in box:
-            if key in keys:
+    for i in range(len(boxes)):
+        for key in boxes[i]:
+            if key in keys and key != i:
                 keys.remove(key)
     return len(keys) == 0
