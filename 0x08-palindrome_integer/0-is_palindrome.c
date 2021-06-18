@@ -1,8 +1,8 @@
 #include "palindrome.h"
 /**
- * is_palindrome - checks if a number is palindrome.
- * @n: number to check
- * Return: 1 if palindrome, otherwise 0.
+ * is_palindrome -  this function checks if a given number is palindrome.
+ * @n: number
+ * Return: 1 if the number is palindrome, otherwise returns 0.
  */
 int is_palindrome(unsigned long n)
 {
