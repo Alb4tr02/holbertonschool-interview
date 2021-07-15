@@ -1,46 +1,35 @@
 #!/usr/bin/python3
-"""
-logs
-"""
+"""check stdin"""
+
+
 import sys
 
-counter = 1
-sum_size = 0
 
-status_dir = {'200': 0,
-              '301': 0,
-              '400': 0,
-              '401': 0,
-              '403': 0,
-              '404': 0,
-              '405': 0,
-              '500': 0}
-
+total_size = 0
+status = ['200', '301', '400', '401', '403', '404', '405', '500']
+times_status = [0, 0, 0, 0, 0, 0, 0, 0]
+counter = 0
 try:
     for line in sys.stdin:
-        ln = line.split()
-
-        if len(ln) > 2:
-            status = ln[-2]
-            size = int(ln[-1])
-
-            sum_size += size
-            if status in status_dir:
-                status_dir[status] += 1
-
-        if counter % 10 == 0:
-            print("File size: {}".format(sum_size))
-            for key in sorted(status_dir.keys()):
-                if status_dir[key] != 0:
-                    print("{}: {}".format(key, status_dir[key]))
-
-        counter += 1
-
+        line_list = line.split(" ")
+        if len(line_list) > 2:
+            size = line_list[-1]
+            code = line_list[-2]
+            if code in status:
+                i = status.index(code)
+                times_status[i] += 1
+            total_size += int(size)
+            counter += 1
+        if counter == 10:
+            print("File size: {:d}".format(total_size))
+            for i in range(8):
+                if times_status[i] != 0:
+                    print("{:}: {:d}".format(status[i], times_status[i]))
+            counter = 0
 except Exception:
     pass
-
 finally:
-    print("File size: {}".format(sum_size))
-    for key in sorted(status_dir.keys()):
-        if status_dir[key] != 0:
-            print("{}: {}".format(key, status_dir[key]))
+    print("File size: {:d}".format(total_size))
+    for i in range(8):
+        if times_status[i] != 0:
+            print("{:}: {:d}".format(status[i], times_status[i]))
